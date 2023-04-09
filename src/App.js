@@ -101,11 +101,15 @@ function App() {
                   <div>
                     <strong id="temperature"></strong>
                     <span className="units">
-                      <a href="#" id="celsius-link" className="active">
+                      <a
+                        href="/index.html"
+                        id="celsius-link"
+                        className="active"
+                      >
                         {Math.round(temperature)}°C
                       </a>{" "}
                       |
-                      <a href="#" id="fahrenheit-link">
+                      <a href="/index.html" id="fahrenheit-link">
                         {Math.round(temperature * 1.8 + 32)}°F
                       </a>
                     </span>
