@@ -131,11 +131,19 @@ function App() {
           <div className="weather-forecast" id="forecast"></div>
         </div>
         <small>
-          <a href="https://github.com/YuliyaKas/weather-app" target="_blank">
+          <a
+            href="https://github.com/YuliyaKas/weather-app"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Open-source on GitHub
           </a>
           <span> and </span>
-          <a href="https://gilded-torte-7130f0.netlify.app" target="_blank">
+          <a
+            href="https://gilded-torte-7130f0.netlify.app"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             hosted on Netlify
           </a>
           <span> by Yuliya Kasperovych</span>
