@@ -21,6 +21,7 @@ function App() {
   const [lastUpdate, setLastUpdate] = useState("");
   const [icon, setIcon] = useState(null);
   const [description, setDescription] = useState(null);
+
   function formatDate(timestamp) {
     let date = new Date(timestamp);
     let hours = date.getHours();
@@ -59,6 +60,12 @@ function App() {
     axios.get(apiUrl).then(handleResponse);
   }
 
+  function keyClick(e) {
+    e.preventDefault();
+    if (e.keyCode === 13) handleClick();
+    console.log(e);
+  }
+
   return (
     <div className="App">
       <div className="weather-app-wrapper">
@@ -73,6 +80,7 @@ function App() {
                   id="city-input"
                   onChange={updateCity}
                   value={name}
+                  onKeyDown={keyClick}
                 />
               </div>
               <div className="col-3">
@@ -88,30 +96,26 @@ function App() {
           </form>
           <div className="overview">
             <h1 id="city">{city}</h1>
+            <h2>Current date: {new Date(Date.now()).toLocaleDateString()} </h2>
             <ul>
               <li>
                 Last update: <span id="date">{lastUpdate}</span>
               </li>
-              <li id="description"></li>
+              <li id="description">Description: {description}</li>
             </ul>
             <div className="row">
               <div className="col-6">
-                <div className="d-flex weather-temperature">
+                <div className="d-flex weather-temperature align-items-center">
                   <img src={icon} alt={description} />
                   <div>
-                    <strong id="temperature"></strong>
                     <span className="units">
-                      <a
-                        href="/index.html"
-                        id="celsius-link"
-                        className="active"
-                      >
+                      <button id="celsius-link" className="active">
                         {Math.round(temperature)}°C
-                      </a>{" "}
+                      </button>{" "}
                       |
-                      <a href="/index.html" id="fahrenheit-link">
+                      <button id="fahrenheit-link">
                         {Math.round(temperature * 1.8 + 32)}°F
-                      </a>
+                      </button>
                     </span>
                   </div>
                 </div>
