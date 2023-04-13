@@ -38,10 +38,14 @@ function App() {
   }
   function updateCity(event) {
     setName(event.target.value);
+    // if (event.keyCode === 13) {
+    //   event.preventDefault();
+    //   console.log(event.key);
+    //   // handleClick();
+    // }
   }
 
   function handleResponse(response) {
-    console.log(response.data);
     setTemperature(response.data.main.temp);
     setHumidity(response.data.main.humidity);
     setWind(response.data.wind.speed);
@@ -56,21 +60,16 @@ function App() {
   const apiKey = "8623270db9f1ee7a49b633c76cafc981";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`;
 
-  function handleClick() {
+  function handleClick(event) {
+    event.preventDefault();
     axios.get(apiUrl).then(handleResponse);
-  }
-
-  function keyClick(e) {
-    e.preventDefault();
-    if (e.keyCode === 13) handleClick();
-    console.log(e);
   }
 
   return (
     <div className="App">
       <div className="weather-app-wrapper">
         <div className="weather-app">
-          <form id="search-form" className="mb-3">
+          <form id="search-form" className="mb-3" onSubmit={handleClick}>
             <div className="row">
               <div className="col-9">
                 <input
@@ -80,15 +79,10 @@ function App() {
                   id="city-input"
                   onChange={updateCity}
                   value={name}
-                  onKeyDown={keyClick}
                 />
               </div>
               <div className="col-3">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleClick}
-                >
+                <button className="btn btn-primary" onClick={handleClick}>
                   Search
                 </button>
               </div>
