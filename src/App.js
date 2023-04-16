@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import WeatherForecast from "./WeatherForcast";
+
 import "./App.css";
 import axios from "axios";
 
@@ -12,6 +14,15 @@ let days = [
   "Saturday",
 ];
 
+const list = [
+  { temp: 20 },
+  { temp: 25 },
+  { temp: 23 },
+  { temp: 22 },
+  { temp: 21 },
+  { temp: 27 },
+];
+
 function App() {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
@@ -21,6 +32,7 @@ function App() {
   const [lastUpdate, setLastUpdate] = useState("");
   const [icon, setIcon] = useState(null);
   const [description, setDescription] = useState(null);
+  const [daily, setDaily] = useState(null);
 
   function formatDate(timestamp) {
     let date = new Date(timestamp);
@@ -38,14 +50,10 @@ function App() {
   }
   function updateCity(event) {
     setName(event.target.value);
-    // if (event.keyCode === 13) {
-    //   event.preventDefault();
-    //   console.log(event.key);
-    //   // handleClick();
-    // }
   }
 
   function handleResponse(response) {
+    dayWeatherSeach(response.data.coord);
     setTemperature(response.data.main.temp);
     setHumidity(response.data.main.humidity);
     setWind(response.data.wind.speed);
@@ -58,11 +66,21 @@ function App() {
     setDescription(response.data.weather[0].description);
   }
   const apiKey = "8623270db9f1ee7a49b633c76cafc981";
+
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`;
 
   function handleClick(event) {
     event.preventDefault();
     axios.get(apiUrl).then(handleResponse);
+  }
+
+  function dayWeatherResponse(response) {
+    setDaily(response.data.daily);
+  }
+
+  function dayWeatherSeach(coords) {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=1fd8093fa5ff12d796d7de756cc9d6b9&units=metric`;
+    axios.get(apiUrl).then(dayWeatherResponse);
   }
 
   return (
@@ -127,6 +145,11 @@ function App() {
             </div>
           </div>
           <div className="weather-forecast" id="forecast"></div>
+          <footer>
+            <div>
+              <WeatherForecast list={daily} />
+            </div>
+          </footer>
         </div>
         <small>
           <a
