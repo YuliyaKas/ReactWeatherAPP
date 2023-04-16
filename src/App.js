@@ -14,15 +14,6 @@ let days = [
   "Saturday",
 ];
 
-const list = [
-  { temp: 20 },
-  { temp: 25 },
-  { temp: 23 },
-  { temp: 22 },
-  { temp: 21 },
-  { temp: 27 },
-];
-
 function App() {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
